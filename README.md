@@ -43,6 +43,21 @@ export default defineConfig({
 @source "./.adaptive-safelist";
 ```
 
+## File Naming Convention
+
+The `.vw` / `.vh` suffix tells the plugins which files to process. **This applies to all file types** — components, pages, hooks, stylesheets, etc.:
+
+| File type | Example | Processed by |
+|---|---|---|
+| React component | `Hero.vw.tsx` | Vite plugin (rewrites `className`) |
+| TypeScript module | `utils.vw.ts` | Vite plugin |
+| Stylesheet | `layout.vw.scss` | PostCSS plugin (rewrites `px` values) |
+| Regular file | `Header.tsx` | **Not processed** — no conversion |
+
+A component that needs viewport-width adaptation should be named `Component.vw.tsx` instead of `Component.tsx`. If a component doesn't need adaptive conversion, keep the regular name — it won't be touched.
+
+You can mix adapted and non-adapted files freely in the same directory. Only files with the `.vw` or `.vh` suffix are processed.
+
 ## How It Works
 
 The library consists of three coordinated plugins:

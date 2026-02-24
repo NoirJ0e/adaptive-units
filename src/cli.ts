@@ -18,6 +18,11 @@ import { modes } from './adaptive.config.js'
 export default createAdaptiveTailwindPlugin(modes)
 `
 
+const ADAPTIVE_CONFIG_DTS = `\
+import type { AdaptiveMode } from 'adaptive-units'
+export declare const modes: AdaptiveMode[]
+`
+
 const POSTCSS_CONFIG = `\
 import { createAdaptivePostcssPlugin } from 'adaptive-units/postcss'
 import { modes } from './src/adaptive.config.js'
@@ -73,6 +78,9 @@ async function init() {
 
   // 1. adaptive.config.js → src/
   await writeFile(path.join(srcDir, 'adaptive.config.js'), ADAPTIVE_CONFIG)
+
+  // 1b. adaptive.config.d.ts → src/
+  await writeFile(path.join(srcDir, 'adaptive.config.d.ts'), ADAPTIVE_CONFIG_DTS)
 
   // 2. tailwind-plugin.js → src/
   await writeFile(path.join(srcDir, 'tailwind-plugin.js'), TAILWIND_PLUGIN)
